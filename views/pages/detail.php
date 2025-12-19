@@ -1,7 +1,13 @@
 <?php
 $game ??= [];  
 $id ??= 0;
+$success ??= '';
 ?>
+
+<?php if($success): ?>
+    
+    <h1><?= $success ?></h1>
+<?php endif; ?>
 
 <?php if(!$game): ?>
     

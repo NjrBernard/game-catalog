@@ -64,9 +64,12 @@ final class AppController
 
     private function gameById(int $id): void {
         $game = getGameById($id);
+        $success = $_SESSION['flash_message'] ?? null;
+        unset($_SESSION['flash_message']);
         $this->render('detail', [
             'id' => $id,
             'game' => $game,
+            'success' => $success,
         ], 200);
     }
 
@@ -134,6 +137,7 @@ final class AppController
         }
 
         $newGameId = createNewGame($old);
+        $_SESSION['flash_message'] = 'Le jeu a été ajouté avec succès.';
         header('Location: /games/' . $newGameId, true, 302);
         exit;
     }
