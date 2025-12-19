@@ -1,13 +1,28 @@
 /* Config générale (html, header, main, footer) */
 html {
     font-family: Bernard MT Condensed;
+
 }
 
 header {
     padding: 10px 0;
-    height: 100px;
-    margin: -21px -7px;
+    height: 80px;
+    margin: -21px -8px;
     background: linear-gradient(to bottom, chartreuse, white);
+}
+
+footer {
+    height: 78px;
+    margin: -30px -8px;
+    padding: 20px 0;
+    background: linear-gradient(to top, chartreuse, white);
+}
+
+body {
+    background-image: url("background.png");
+    background-repeat: repeat-y;
+    background-size: cover;
+    overflow-x: hidden;
 }
 
 nav {
@@ -17,18 +32,15 @@ nav {
 
 
 main {
-    min-height: calc(100vh - 225px);
+    background-color: white;
+    min-height: calc(100vh - 254px);
     margin: 20px auto;
     width: 60%;
     min-width: 600px;
+    padding: 30px 0;
 }
 
-footer {
-    height: 78px;
-    margin: -21px -7px;
-    padding: 20px 0;
-    background: linear-gradient(to top, chartreuse, white);
-}
+
 
 /* Boutons */
 
@@ -37,16 +49,39 @@ footer {
     padding: 6px;
     text-align: center;
     background: linear-gradient(to bottom, lightgray, white);
-    width: 100px;
-    height: 30px;
-    border: solid 2px gray;
+    width: 130px;
+    height: 40px;
+    border: solid 3px gold;
     border-radius: 5px;
     font-size: 15px;
-    font-family:  MT Condensed;
+    font-family: Bernard MT Condensed;
     font-weight: bold;
 }
 
 .btn-nav:hover {
+    background: linear-gradient(to top, chartreuse, white);
+    cursor: pointer;
+    transform: translateX(2px) translateY(2px);
+    box-shadow: 10px 10px 50px gray;
+}
+
+.btn-random {
+    display: block;
+    margin: 10px auto;
+    padding: 6px;
+    text-align: center;
+    background: linear-gradient(to bottom, lightgray, white);
+    width: 50%;
+    height: 40px;
+    border: solid 3px gold;
+    border-radius: 5px;
+    font-size: 15px;
+    font-family: Bernard MT Condensed;
+    font-weight: bold;
+
+}
+
+.btn-random:hover {
     background: linear-gradient(to top, chartreuse, white);
     cursor: pointer;
     transform: translateX(2px) translateY(2px);
@@ -60,10 +95,12 @@ footer {
     justify-content: center;
     align-items: center;
     width: 25%;
+    min-width: 300px;
 
 }
 
 .nav-title {
+    min-width: 500px;
     width: 60%;
     text-align: center;
 }
@@ -71,9 +108,10 @@ footer {
 
 /* Liens */
 
-a, a:visited {
+a,
+a:visited {
     color: black;
-    text-decoration: none; 
+    text-decoration: none;
 }
 
 a:hover {
@@ -84,25 +122,27 @@ a:hover {
 /* Cards*/
 
 .card {
-    margin: 20px auto;
-    padding: 0 0px;
+    margin: 30px auto;
+    padding: 10px 0px;
     width: 80%;
-    height: 550px;
+    min-height: 350px;
     border: 2px solid chartreuse;
     border-radius: 10px;
     text-align: center;
+    background-color: lightgray;
 }
 
 .list-card {
-    min-width: 800px;;
+    width: 80%;
+    min-width: 400px;
     display: flex;
     flex-direction: row;
     border: 2px solid chartreuse;
     border-radius: 10px;
     padding: 10px;
-    margin-bottom: 20px;
+    margin: 50px auto;
     background-color: lightgray;
-    
+
 }
 
 .list-card:hover {
@@ -117,7 +157,9 @@ a:hover {
 }
 
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     text-align: center;
     color: black;
 }
@@ -161,27 +203,29 @@ table {
 }
 
 tr {
+
     height: 40px;
     border-bottom: solid 2px gray;
 
 }
 
 .tableau {
-    margin: 20px 0;
-    padding: 10px 0;
+    margin: 0px auto;
+    padding: 10px 0 20px 0;
     text-align: center;
-    min-width: 900px;
+    width: 50%;
 }
 
 .assoce {
     padding: 10px 20px;
-    width: 70%;
+    width: 65%;
     text-align: left;
 }
 
 .valeur {
     text-align: right;
     padding: 10px 20px;
+    min-width: 150px;
 }
 
 .title-right {
@@ -195,7 +239,22 @@ tr {
     border: solid 2px gray;
     border-radius: 50px;
     text-align: center;
-    vertical-align: middle; 
+    vertical-align: middle;
+}
+
+.first:hover {
+    box-shadow: 5px 5px 20px gold;
+    transform: translateX(1px) translateY(1px);
+}
+
+.second:hover {
+    box-shadow: 5px 5px 20px silver;
+    transform: translateX(1px) translateY(1px);
+}
+
+.third:hover {
+    box-shadow: 5px 5px 20px #cd7f32;
+    transform: translateX(1px) translateY(1px);
 }
 
 .first {
@@ -209,9 +268,3 @@ tr {
 .third {
     background-color: #cd7f32;
 }
-
-
-
-
-
-

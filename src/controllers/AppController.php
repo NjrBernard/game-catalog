@@ -5,8 +5,7 @@ require_once __DIR__ . '/../helpers/debug.php';
 
 final class AppController
 {
-    public function handleRequest(string $path): void
-    {
+    public function handleRequest(string $path): void {
         if (preg_match('#^/games/(\d+)$#', $path, $m)) {
             $this->gameById((int) $m[1]);
             return;
@@ -19,6 +18,10 @@ final class AppController
             case '/games':
                 $this->games();
                 break;
+            case '/random-game':
+                $this->randomGame();
+                header('Location: /games/' . (getRandomGame()['id'] ?? ''));
+                break;
             default:
                 $this->notFound();
                 break;
@@ -28,8 +31,7 @@ final class AppController
 
     //Créer une fonction render - type string view, data (array)
 
-    private function render(string $view, array $data = []): void
-    {
+    private function render(string $view, array $data = []): void{
         extract($data);
         // Header
         require __DIR__ . '/../../views/partials/header.php';
@@ -39,8 +41,7 @@ final class AppController
         require __DIR__ . '/../../views/partials/footer.php';
     }
 
-    private function home(): void
-    {
+    private function home(): void {
         $featuredGames = getLimitedGames(3);
         http_response_code(200);
         $this->render('home', [
@@ -50,8 +51,7 @@ final class AppController
     }
 
 
-    private function games(): void
-    {
+    private function games(): void {
         //1. Récupérer tous les jeux
         $games = getAllGamesSortedByRating();
         http_response_code(200);
@@ -61,8 +61,7 @@ final class AppController
         ]);
     }
 
-    private function gameById(int $id): void
-    {
+    private function gameById(int $id): void {
         $game = getGameById($id);
         $this->render('detail', [
             'id' => $id,
@@ -70,8 +69,15 @@ final class AppController
         ]);
     }
 
-    private function notFound(): void
-    {
+    private function randomGame(): void {
+        $game = getRandomGame();
+        http_response_code(200);
+        $this->render('detail', [
+            'game' => $game,
+        ]);
+    }
+
+    private function notFound(): void {
         http_response_code(404);
         $this->render('not-found');
     }

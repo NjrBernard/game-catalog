@@ -18,12 +18,11 @@ $total = $total ?? 0;
                         elseif($i === 2) { echo 'second'; } 
                         elseif($i === 3) { echo 'third'; } ?>"> <?=$i ?></td>
         <td> <?= $game['title'] ?> </td>
-        <td> <?= $game['platform'] ?> </td>
-        <td> <?= $game['genre'] ?> </td>
-        <td> <?= $game['releaseYear'] ?> </td>
+
         </tr>
     
 <?php  endforeach; ?>
 
 </table>
-</div>
+<br>
+    <a href="/random-game"><button class="btn-random">Jeu aléatoire</button></a>

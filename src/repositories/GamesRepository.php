@@ -37,5 +37,10 @@ readonly final class GamesRepository
         $sql->execute();
         return $sql -> fetch(PDO::FETCH_ASSOC);
     }
+
+    public function findRandomGame(): ?array {
+        $sql = $this->pdo->query("SELECT * FROM games ORDER BY RAND() LIMIT 1");
+        return $sql -> fetch(PDO::FETCH_ASSOC);
+    }
 }
 
