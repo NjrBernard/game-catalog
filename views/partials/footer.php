@@ -11,7 +11,7 @@
 
 </main>
 <footer>
-<h1>Game catalog From Footer</h1>
+<h3>Par Nicolas BERNARD ©</h3>
 </footer>
 </body>
 

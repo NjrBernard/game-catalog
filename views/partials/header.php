@@ -18,8 +18,13 @@
                 <a href="/games"><button class="btn-nav">Jeux</button></a>
             </div>
             </div>
-            <div class="nav-title"><h1>Game catalog from Header</h1></div>
-            <div class="nav-cote"></div>
+            <div class="nav-title"><h1>Catalogue de jeux</h1></div>
+            <div class="nav-cote">
+                 <a href="/games/add-new-game"><button class="btn-nav">Ajouter un jeu</button></a>
+            <div >
+                
+            </div>
+            </div>
             
         </nav>
         

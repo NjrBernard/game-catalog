@@ -20,7 +20,9 @@ final class AppController
                 break;
             case '/random-game':
                 $this->randomGame();
-                header('Location: /games/' . (getRandomGame()['id'] ?? ''));
+                break;
+            case '/games/add-new-game':
+                $this->createNewGame();
                 break;
             default:
                 $this->notFound();
@@ -31,7 +33,7 @@ final class AppController
 
     //Créer une fonction render - type string view, data (array)
 
-    private function render(string $view, array $data = []): void{
+    private function render(string $view, array $data = [], int $status = 200): void{
         extract($data);
         // Header
         require __DIR__ . '/../../views/partials/header.php';
@@ -43,22 +45,21 @@ final class AppController
 
     private function home(): void {
         $featuredGames = getLimitedGames(3);
-        http_response_code(200);
         $this->render('home', [
             'featuredGames' => $featuredGames,
             'total' => countAllGames(),
-        ]);
+        ], 200);
     }
 
 
     private function games(): void {
         //1. Récupérer tous les jeux
         $games = getAllGamesSortedByRating();
-        http_response_code(200);
+
         //2. Afficher la vue
         $this->render('games', [
             'games' => $games,
-        ]);
+        ], 200);
     }
 
     private function gameById(int $id): void {
@@ -66,19 +67,79 @@ final class AppController
         $this->render('detail', [
             'id' => $id,
             'game' => $game,
-        ]);
+        ], 200);
     }
 
     private function randomGame(): void {
-        $game = getRandomGame();
-        http_response_code(200);
-        $this->render('detail', [
-            'game' => $game,
-        ]);
+        $lastId = $_SESSION['last_random_id'] ?? 0;
+        $game = null;
+        for ($i = 0; $i<5; $i++) {
+            $candidate = getRandomGame();
+            if ($candidate && $candidate['id'] !== $lastId) {
+                $game = $candidate;
+            }
+
+        }
+        $id = $game['id'];
+        $_SESSION['last_random_id'] = $id;
+        header('Location: /games/' . $id, true, 302);
+        200;
+        exit;
+    }
+
+    public function createNewGame(): void {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->handleAddGame();
+            exit;
+        }
+        $this->render('add-new-game', [], 200);
+    }
+
+
+    private function handleAddGame  (): void {
+        $title = trim($_POST['title'] );
+        $platform = trim($_POST['platform'] ); 
+        $genre = trim($_POST['genre'] );
+        $releaseYear = (int)(trim($_POST['releaseYear']));
+        $rating = (int)(trim($_POST['rating']));
+        $description = trim($_POST['description'] );
+        $notes = trim($_POST['notes'] );
+
+        $errors = [];
+
+        if ($title === '')  $errors['title'] = 'Le titre est obligatoire.';
+        if ($platform === '')  $errors['platform'] = 'La plateforme est obligatoire.';
+        if ($genre === '')  $errors['genre'] = 'Le genre est obligatoire.';
+        if ($releaseYear <= 1900 || $releaseYear > (int)date('Y'))  $errors['releaseYear'] = "L'année de sortie est obligatoire.";
+        if ($rating < 0 || $rating > 10)  $errors['rating'] = 'La note doit être entre 0 et 10.';
+        if ($description === '')  $errors['description'] = 'La description est obligatoire.';
+        if ($notes === '')  $errors['notes'] = 'Les notes sont obligatoires.';
+
+        $old = [
+            'title' => $title,
+            'platform' => $platform,
+            'genre' => $genre,
+            'releaseYear' => $releaseYear,
+            'rating' => $rating,
+            'description' => $description,
+            'notes' => $notes,
+        ];
+
+        if (!empty($errors)) {
+            $this->render('add-new-game', [
+                'errors' => $errors,
+                'old' => $old,
+            ], 422);
+            return;
+        }
+
+        $newGameId = createNewGame($old);
+        header('Location: /games/' . $newGameId, true, 302);
+        exit;
     }
 
     private function notFound(): void {
-        http_response_code(404);
-        $this->render('not-found');
+
+        $this->render('not-found', [], 404);
     }
 }

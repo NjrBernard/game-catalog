@@ -25,4 +25,4 @@ $total = $total ?? 0;
 
 </table>
 <br>
-    <a href="/random-game"><button class="btn-random">Jeu aléatoire</button></a>
+    <a href="/random-game"><button class="btn-random">🎲 Jeu aléatoire 🎲</button></a>
