@@ -1,0 +1,217 @@
+/* Config générale (html, header, main, footer) */
+html {
+    font-family: Bernard MT Condensed;
+}
+
+header {
+    padding: 10px 0;
+    height: 100px;
+    margin: -21px -7px;
+    background: linear-gradient(to bottom, chartreuse, white);
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+}
+
+
+main {
+    min-height: calc(100vh - 225px);
+    margin: 20px auto;
+    width: 60%;
+    min-width: 600px;
+}
+
+footer {
+    height: 78px;
+    margin: -21px -7px;
+    padding: 20px 0;
+    background: linear-gradient(to top, chartreuse, white);
+}
+
+/* Boutons */
+
+.btn-nav {
+    margin: 0 15px;
+    padding: 6px;
+    text-align: center;
+    background: linear-gradient(to bottom, lightgray, white);
+    width: 100px;
+    height: 30px;
+    border: solid 2px gray;
+    border-radius: 5px;
+    font-size: 15px;
+    font-family:  MT Condensed;
+    font-weight: bold;
+}
+
+.btn-nav:hover {
+    background: linear-gradient(to top, chartreuse, white);
+    cursor: pointer;
+    transform: translateX(2px) translateY(2px);
+    box-shadow: 10px 10px 50px gray;
+}
+
+.nav-cote {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+
+}
+
+.nav-title {
+    width: 60%;
+    text-align: center;
+}
+
+
+/* Liens */
+
+a, a:visited {
+    color: black;
+    text-decoration: none; 
+}
+
+a:hover {
+    color: chartreuse;
+}
+
+
+/* Cards*/
+
+.card {
+    margin: 20px auto;
+    padding: 0 0px;
+    width: 80%;
+    height: 550px;
+    border: 2px solid chartreuse;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.list-card {
+    min-width: 800px;;
+    display: flex;
+    flex-direction: row;
+    border: 2px solid chartreuse;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: lightgray;
+    
+}
+
+.list-card:hover {
+    box-shadow: 10px 10px 50px gray;
+    transform: translateX(2px) translateY(2px);
+}
+
+.attribut {
+    font-size: x-large;
+    text-align: center;
+    padding: 30px;
+}
+
+
+h1, h2, h3 {
+    text-align: center;
+    color: black;
+}
+
+.title {
+    font-weight: bold;
+    height: 30px;
+    width: 100%;
+    margin: 0 auto;
+    background-color: chartreuse;
+    text-align: center;
+}
+
+.corps {
+    height: 130px;
+    width: 100%;
+    padding-top: 10px;
+    text-align: center;
+    background: linear-gradient(lightgray, white)
+}
+
+.foot {
+    padding-top: 5px;
+    height: 25px;
+    width: 100%;
+    background-color: chartreuse;
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+/* Tableaux */
+
+table {
+    width: 95%;
+}
+
+tr {
+    height: 40px;
+    border-bottom: solid 2px gray;
+
+}
+
+.tableau {
+    margin: 20px 0;
+    padding: 10px 0;
+    text-align: center;
+    min-width: 900px;
+}
+
+.assoce {
+    padding: 10px 20px;
+    width: 70%;
+    text-align: left;
+}
+
+.valeur {
+    text-align: right;
+    padding: 10px 20px;
+}
+
+.title-right {
+    position: relative;
+    text-align: center;
+}
+
+.ligne .classement {
+    width: 40px;
+    height: 20px;
+    border: solid 2px gray;
+    border-radius: 50px;
+    text-align: center;
+    vertical-align: middle; 
+}
+
+.first {
+    background-color: gold;
+}
+
+.second {
+    background-color: silver;
+}
+
+.third {
+    background-color: #cd7f32;
+}
+
+
+
+
+
+
