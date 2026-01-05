@@ -1,11 +1,17 @@
 <?php
 use Controller\AppController;
+use Core\Response;
+use Core\Database;
+use Repository\GamesRepository;
+
 
 session_start();
-require_once __DIR__ . '/../autoload.php';
-require_once __DIR__ . '/../src/helpers/debug.php';
+require __DIR__ . '/../autoload.php';
+$config = require_once __DIR__ . '/../config/db.php';
 
 $path = $_SERVER['REQUEST_URI'];
+$response = new Response();
+$repository = new GamesRepository(Database::makePdo($config['db']));
 
-$appController = new AppController();
+$appController = new AppController($response, $repository);
 $appController->handleRequest($path);
