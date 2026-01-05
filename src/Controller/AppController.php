@@ -2,14 +2,20 @@
 
 namespace Controller;
 use Core\Response;
+use Core\Session;
+use Core\Request;
+use Helper\Debug;
 use Repository\GamesRepository;
+
 
 require_once __DIR__ . '/../Helper/debug.php';
 
 final class AppController
 {
     public function __construct(private readonly Response $response, 
-    private GamesRepository $gamesRepository,)
+    private GamesRepository $gamesRepository,
+    private Session $session,
+    private Request $request,)
     {
 }
     public function handleRequest(string $path): void {
@@ -63,8 +69,7 @@ final class AppController
 
     private function gameById(int $id): void {
         $game = $this->gamesRepository->findById($id);
-        $success = $_SESSION['flash_message'] ?? null;
-        unset($_SESSION['flash_message']);
+        $success = $this->session->pullFlash('success');
         $this->response->render('detail', [
             'id' => $id,
             'game' => $game,
@@ -73,7 +78,7 @@ final class AppController
     }
 
     private function randomGame(): void {
-        $lastId = $_SESSION['last_random_id'] ?? 0;
+        $lastId = $this->session->get('last_random_id') ?? null;
         $game = null;
         for ($i = 0; $i<5; $i++) {
             $candidate = $this->gamesRepository->findRandomGame();
@@ -83,13 +88,13 @@ final class AppController
 
         }
         $id = $game['id'];
-        $_SESSION['last_random_id'] = $id;
+        $this->session->set('last_random_id', $id);
         $this->response->redirect('/games/' . $id);
         exit;
     }
 
     public function createNewGame(): void {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($this->request->isPost()) {
             $this->handleAddGame();
             exit;
         }
@@ -98,13 +103,13 @@ final class AppController
 
 
     private function handleAddGame  (): void {
-        $title = trim($_POST['title'] );
-        $platform = trim($_POST['platform'] ); 
-        $genre = trim($_POST['genre'] );
-        $releaseYear = (int)(trim($_POST['releaseYear']));
-        $rating = (int)(trim($_POST['rating']));
-        $description = trim($_POST['description'] );
-        $notes = trim($_POST['notes'] );
+        $title = trim($this->request->post('title') );
+        $platform = trim($this->request->post('platform') ); 
+        $genre = trim($this->request->post('genre') );
+        $releaseYear = (int)(trim($this->request->post('releaseYear')));
+        $rating = (int)(trim($this->request->post('rating')));
+        $description = trim($this->request->post('description') );
+        $notes = trim($this->request->post('notes') );
 
         $errors = [];
 
@@ -114,7 +119,6 @@ final class AppController
         if ($releaseYear <= 1900 || $releaseYear > (int)date('Y'))  $errors['releaseYear'] = "L'année de sortie est obligatoire.";
         if ($rating < 0 || $rating > 10)  $errors['rating'] = 'La note doit être entre 0 et 10.';
         if ($description === '')  $errors['description'] = 'La description est obligatoire.';
-        if ($notes === '')  $errors['notes'] = 'Les notes sont obligatoires.';
 
         $old = [
             'title' => $title,
@@ -135,7 +139,7 @@ final class AppController
         }
 
         $newGameId = $this->gamesRepository->createGame($old);
-        $_SESSION['flash_message'] = 'Le jeu a été ajouté avec succès.';
+        $this->session->flash('success', 'Le jeu a été ajouté avec succès.');
         $this->response->redirect('/games/' . $newGameId);
         exit;
     }
