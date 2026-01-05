@@ -18,37 +18,13 @@ final class AppController
     private Request $request,)
     {
 }
-    public function handleRequest(string $path): void {
-        if (preg_match('#^/games/(\d+)$#', $path, $m)) {
-            $this->gameById((int) $m[1]);
-            return;
-        }
 
-        switch ($path) {
-            case '/':
-                $this->home();
-                break;
-            case '/games':
-                $this->games();
-                break;
-            case '/random-game':
-                $this->randomGame();
-                break;
-            case '/games/add-new-game':
-                $this->createNewGame();
-                break;
-            default:
-                $this->notFound();
-                break;
-        }
-
-    }
 
     //Créer une fonction render - type string view, data (array)
 
     
 
-    private function home(): void {
+    public function home(): void {
         $featuredGames = $this->gamesRepository->findTop(3);
         $this->response->render('home', [
             'featuredGames' => $featuredGames,
@@ -57,7 +33,7 @@ final class AppController
     }
 
 
-    private function games(): void {
+    public function games(): void {
         //1. Récupérer tous les jeux
         $games = $this->gamesRepository->findAllSortedByRating();
 
@@ -67,7 +43,7 @@ final class AppController
         ], 200);
     }
 
-    private function gameById(int $id): void {
+    public function gameById(int $id): void {
         $game = $this->gamesRepository->findById($id);
         $success = $this->session->pullFlash('success');
         $this->response->render('detail', [
@@ -77,7 +53,7 @@ final class AppController
         ], 200);
     }
 
-    private function randomGame(): void {
+    public function randomGame(): void {
         $lastId = $this->session->get('last_random_id') ?? null;
         $game = null;
         for ($i = 0; $i<5; $i++) {
@@ -102,7 +78,7 @@ final class AppController
     }
 
 
-    private function handleAddGame  (): void {
+    public function handleAddGame  (): void {
         $title = trim($this->request->post('title') );
         $platform = trim($this->request->post('platform') ); 
         $genre = trim($this->request->post('genre') );
@@ -144,7 +120,7 @@ final class AppController
         exit;
     }
 
-    private function notFound(): void {
+    public function notFound(): void {
 
         $this->response->render('not-found', [], 404);
     }

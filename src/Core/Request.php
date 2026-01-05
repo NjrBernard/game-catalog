@@ -10,7 +10,7 @@ final class Request {
     }
 
 
-    private function method (): string {
+    public function method (): string {
         return ($_SERVER['REQUEST_METHOD'] ?? 'GET');
     }
 
