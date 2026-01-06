@@ -31,6 +31,13 @@ final class Router {
             return;
         }
 
+        foreach ($this->getRegexRoutes as $pattern => $handler) {
+    if (preg_match($pattern, $path, $matches)) {
+        $handler($request, $response, $matches);
+        return;
+    }
+}
+
         $response->render('not-found', [], 404);
 
     }
